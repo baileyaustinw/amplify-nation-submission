@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+	{% load staticfiles %}
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.min.css" />
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800,700,300' rel='stylesheet' type='text/css'>
+		{% block stylesheets %}
+		{% endblock %}
+		<!--[if lt IE 9]>
+		    <script src="{% static 'home/js/html5shiv-printshiv.min.js' %}"></script>
+		<![endif]-->
+
+		<title>Amplify Technologies</title>
+	</head>
+	<body>
+
+		<canvas id="barGraph" width="400" height="400"></canvas>
+
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+		<script>
+			var xmlhttp = new XMLHttpRequest();
+			var url = "http://localhost:8500/people_/";
+
+			var people = []
+			var makes = []
+
+			xmlhttp.onreadystatechange = function() {
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					var obj = JSON.parse(xmlhttp.responseText);
+					console.log(obj);
+
+					for (key in obj) {
+						makes.push(key);
+						people.push(obj[key]);
+					}
+
+					console.log(makes);
+					console.log(people);
+
+
+					var ctx = document.getElementById("barGraph").getContext("2d");
+
+					data = {
+						labels: makes,
+						datasets: [
+							{
+								label: "Car Makes",
+					            fillColor: "rgba(220,220,220,0.5)",
+					            strokeColor: "rgba(220,220,220,0.8)",
+					            highlightFill: "rgba(220,220,220,0.75)",
+					            highlightStroke: "rgba(220,220,220,1)",
+					            data: people
+							}
+						]
+					};
+
+
+					var barChart = new Chart(ctx).Bar(data);
+
+				}
+			}
+
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send();
+
+		</script>
+	</body>
+</html>

@@ -2,5 +2,8 @@ from django.db import models
 
 
 class Person(models.Model):
-    # TODO: Define model to match database
-    pass
+    name = models.CharField(max_length=200)
+    car_make = models.CharField(max_length=200)
+
+    def __unicode__(self):
+    	return self.name
