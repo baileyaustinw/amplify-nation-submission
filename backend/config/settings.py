@@ -27,9 +27,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = [
-    '*',
-]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -85,14 +83,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-# Define type of parsers
-# JSON Parser in this case
-REST_FRAMEWORK = {
-    'DEFAULT_PARSER_CLASSES': (
-        'rest_framework.parsers.JSONParser',
-    )
-}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/

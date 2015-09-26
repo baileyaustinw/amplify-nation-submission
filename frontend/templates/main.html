@@ -19,6 +19,7 @@
 		<canvas id="barGraph" width="400" height="400"></canvas>
 
 
+		<!-- Chart.js library -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
 		<script>
 			var xmlhttp = new XMLHttpRequest();
@@ -28,21 +29,28 @@
 			var makes = []
 
 			xmlhttp.onreadystatechange = function() {
+				// if the request is successful
 				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					// parse the retrieved JSON object
 					var obj = JSON.parse(xmlhttp.responseText);
 					console.log(obj);
 
 					for (key in obj) {
+						// push number of people to an array
 						makes.push(key);
+						// push makes of car to an array
 						people.push(obj[key]);
 					}
 
+					// logs just to check
+					// don't use for production
 					console.log(makes);
 					console.log(people);
 
-
+					// grab the reference to the canvas element
 					var ctx = document.getElementById("barGraph").getContext("2d");
 
+					// chart data for Chart.js bar chart
 					data = {
 						labels: makes,
 						datasets: [
@@ -57,12 +65,13 @@
 						]
 					};
 
-
+					// initialize and render bar chart with data from JSON object
 					var barChart = new Chart(ctx).Bar(data);
 
 				}
 			}
 
+			// Make the GET Request to retrieve JSON data from server
 			xmlhttp.open("GET", url, true);
 			xmlhttp.send();
 
